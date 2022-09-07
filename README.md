@@ -1,5 +1,5 @@
 
-<b>Visualization of quantum spin</b>
+<b>Online visualization Stern-Gerlach experiment, quantum spin, Bloch sphere, quantum rotations</b>
 
 <b>In the first chapter</b> of this site,  an attempt was made to create a program containing a virtual  Stern-Gerlach experiment.
 
