@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Chapter 6</title>
+	<link rel="stylesheet" type="text/css" href="../libs/style.css">
+	<script type="text/javascript" src="../libs/three.js"></script>
+	<script type = "text/javascript" src = "../libs/dat.gui.js"></script>
+	<script src = "../libs/OrbitControls.js"></script>
+	<script src = "../libs/WebGeometry.js"></script>
+	<script src = "buttons.js"></script>
+	<script src = "chapter6.js"></script>
+	<script src = "text.js"></script>
+	
+	
+	<style>
+		#div_out
+		{
+			position: relative;
+			width: 1075px;
+			height: 425px;
+			left: 0px;
+			background-color: #ffffff;
+			border: solid 2px;
+		}
+		#div_in
+		{
+			position: absolute;
+			left: 5px;
+			top: 5px;			
+			height: 610px;
+			width: 995px;
+			background-color: #eeffee;
+			border: solid 2px;
+		}
+		#div_pars
+		{
+			position: absolute;
+			left: 505px;
+			top: 2px;			
+			height: 415px;
+			width: 300px;
+			background-color: #eeeeaa;
+			border: solid 2px;
+		}
+		#gui_container
+		{
+			position: absolute;
+			left: 815px;
+			top: 5px;
+		}
+	</style>
+			
+	<style>
+		button
+		{
+		  border-radius: 14px;
+		  border: none;
+		  padding: 10px;
+		  color: #111;
+		  border-radius: 14px;
+		  font: italic bold 24px Georgia,serif;
+		  transition: all 0.2s;
+		  margin: 5px;
+		  border-bottom: 0px solid #eee;
+		  cursor:pointer;
+						position: absolute;
+						left: 8px;
+						top: 10px;	
+		}
+		button:active
+		{
+		  transform: scaleX(0.9) translateY(4px);
+		}
+
+		button.yellow{
+		  background: #88aa00;
+		}
+		button.yellow:not(:active){
+		  border-bottom: 4px solid #333300;
+		}
+	</style>
+
+</head>
+
+<body>
+
+<h3 align = "center">&emsp;&emsp;
+<a href="../Chapter5/Chapter5.html"> <span class=brown>Глава 5 </span></a>  <span class=brown>&ensp;◄</span>
+&emsp;&emsp;&emsp;
+<a href="../index.html"> <span class=brown> Содержание  </span></a>
+</h3>
+
+<h2 align = "center">Глава 6. &emsp;&emsp; Квантовые вращения</h2>
+<h3 align = "center">Chapter 6. &emsp;&emsp;&emsp;&emsp; Quantum rotations</h3>
+
+<div id="div_out">  
+
+	
+		<canvas id = "canvas_draw" width="500" height="422" style = "border: 1px solid; position: absolute; z-index: 1"></canvas>
+		<canvas id = "hud_1" width="500" height="422" style = "position: absolute; z-index: 0"></canvas>
+		
+		<div id="div_pars" >
+			<canvas id="hud_2" width="330" height="390"></canvas>
+		</div>
+
+		<div id="gui_container" ></div> 
+	
+	
+</div>
+
+<p>
+<span class=blue3>
+This chapter discusses the visualization of quantum rotations. The points on the sphere, that appear 
+when the Bloch vector rotates, are mapped to the complex plane (it is shown in gray color). 
+Points on the complex plane are displayed in black color.
+Mapping points, lying on a sphere, to a complex plane is called a fractional-linear transformation. 
+Circles lying on a sphere, using a fractional-linear transformation, are transformed into circles lying on a complex plane.
+
+<br><br>
+&ensp;To determine the value of the quantum state <b>|ψ〉</b>, set the values of the polar and azimuth angles
+either using the <b>GUI</b> in the upper right corner of the program, or using the keys located 
+under the <b>GUI</b>. The intersection of a red-colored straight line with a gray horizontal plane 
+sets the value of complex coordinates. This value is (<b>Z = ...</b>) you can see it 
+at the very bottom of the middle part of the program window.
+<br>
+&emsp;Rotation around the axes X, Y and Z is set using the keys <b>"R(X+"), "R(X-)", "R(Y+"), "R(Y-)", R(Z+), "R(Z-)"</b>.
+<br>
+&emsp;<b>"Erase rotation points"</b> - Erases all points resulting from rotation on the Bloch sphere and on the complex plane
+<br>
+&emsp;<b> "X", "Y", "Z", "H"</b> - keys define the action of the Pauli and Hadamard operators
+</span>
+<br><br>
+<span class=purple>
+&emsp;Sphere rotation - left mouse button drag<br>
+&emsp;Sphere size - middle mouse button drag, or mousewheel<br>
+&emsp;Sphere movement on screen - right mouse button drag
+</span>
+</p>
+
+<p>
+Логические операции над кубитами, так же как и в классической электронике, осуществляют специальные 
+логически активные элементы, называемые квантовыми вентилями. Операцию, выполняемую любым однокубитным вентилем, 
+можно представить как поворот вектора, характеризующего состояние кубита, в другую точку сферы Блоха.
+Данная программа позволяет визуально наблюдать как работают квантовые вращения и некоторые наиболее известные вентили.
+</p>
+
+<p>
+В четвертой главе были  рассмотрены матрицы Паули. Одной из основных областей, где находят применение эти матрицы являются квантовые вращения.
+Но, перед тем как заняться непосредственно вращениями, необходимо рассмотреть, казалось бы, несвязанную с этим тему - 
+возведение числа в степень, когда в качестве показателя степени выступает матрица. Рассмотрим этот вопрос подробнее.
+</p>
+<p>
+Матрицы Паули σ<sub>x</sub>, σ<sub>x</sub>, σ<sub>x</sub>, которые в дальнейшем мы будем обозначать также как  X, Y и Z , когда они
+возведены в степень, то они порождают операторы вращения, которые поворачивают
+<b>вектор Блоха</b> = ( sin(θ)cos(φ), sin(θ)sin(φ), cos(θ) ) вокруг осей  x, y и z на заданный угол α:
+<br>
+&ensp;&ensp;&ensp;&ensp;&ensp;<img src = "rotation_X_Y_Z.png">
+ <br>
+</p>
+<p>
+&ensp;&ensp;&ensp;&ensp;&ensp;<img src = "exponenta_text.png">
+</p>
+<p>
+Может также возникнуть вопрс - почему для осуществления поворотов можно использовать возведение в степень.
+Для ответа на этот вопрос следует вспомнить, что экспоненту можно рассматривать как оператор выполняющий 
+поворот вектора
+<br>
+&ensp;&ensp;&ensp;&ensp;<big><b><em>e<sup>αi</sup> = cos(α) + i·sin(α)</em></b></big>
+<br>
+<p>
+На <em>youtube</em> есть хорошее видео на эту тему <b><a href="https://www.youtube.com/watch?v=O85OWBJ2ayo"target="_blank">
+How (and why) to raise e to the power of a matrix</a></b>
+</p>
+<p>
+Вернемся к квантовым вращениям.
+</p>
+<p>
+В программе визуализации данной главы можно наблюдать вращения вектора Блоха вокруг осей X, Y и Z. Вращения
+выполняются путем нажатия кнопок "<b>R(X+)</b>" и "<b>R(X-)</b>", "<b>R(Y+)</b>" и "<b>R(Y-)</b>", "<b>R(Z+)</b>" и "<b>R(Z-)</b>". 
+Можно задать три значения шага вращения при помощи кнопок "<b>2°</b>", "<b>5°</b>" и "<b>10°</b>". На сфере Блоха можно будет 
+при этом увидеть соответствующие точки. Также будут выводиться значения вектора состояния. Одновременно на комплексной
+плоскости z = 0 отобразятся точки (черный цвет и чуть меньшего размера) получившиеся в результате 
+дробно-линейного преобразования (смотри главу 5). В интернете я не нашел других программ которые позволяли бы 
+визуально и интерактивно получать такие изображения.
+</p>
+<p>
+Стереть с экрана построенные в результате вращения точки можно нажав клавишу "<b>Erase rotation points</b>".
+</p>
+<p>
+Предположим, что исходное квантовое состояние с углами θ и φ задающими положение вектора Блоха равно
+<br>
+&emsp;&emsp; <b>|ψ〉 = cos(θ/2)|0〉 + sin(θ/2)⋅e<sup>iφ</sup>|1〉</b><br>
+Тогда квантовое состояние после поворота вокруг оси X можно на угол α рассчитать по формуле
+<br> 
+&emsp;&emsp;<b>|ψ<sup>'</sup>〉 = R<sub>x</sub>(α)· |ψ〉</b>
+<br>Тогда новое квантовое состояние <b>|ψ<sup>'</sup>〉</b> будет определяться вектором Блоха
+с углами <b>θ<sup>'</sup></b> и <b>φ<sup>'</sup></b>
+<br>
+&emsp;&emsp; <b>|ψ<sup>'</sup>〉 = cos(θ<sup>'</sup>/2)|0〉 + sin(θ<sup>'</sup>/2)⋅e<sup>iφ<sup>'</sup></sup>|1〉</b>
+</p>
+<p>
+В файле <em>button.js</em> в функции <em>function X_plus()</em> можно увидеть программу расчета 
+квантового состояния <b>|ψ<sup>'</sup>〉</b> и углов <b>θ<sup>'</sup></b> и <b>φ<sup>'</sup></b> с комментариями к расчету
+применительно к повороту вокруг оси X. Расчет поворотов вокруг осей Y и Z осуществляется подобным образом.
+</p>
+<p>
+Вращая вектор Блоха, можно увидеть, что окружности на сфере отображаются в окружности на комплексной плоскости z = 0,
+которая проходит горизонтально через центр сферы (имеет серый цвет).
+Такие отображения являются характерным признаком конформного отбражения (дробно-линейного преобразования).
+На следующем скриншоте показаны окружности на сфере полученные путем вращения вектора Блоха вокруг осей X, Y и Z
+и соответствующие им окружности на комплексной  плоскости (они отображены более мелкими черными точками). 
+<br>
+&emsp;&emsp;&emsp;&emsp;<img src = "transformation.png">
+</p>
+<p>
+На видеоролике со сферой Римана <b><a href="https://www.youtube.com/watch?v=l3nlXJHD714" target="_blank">Riemann Sphere</a></b>
+показано отображение точек сферы на плоскость с северного полюса сферы.
+</p>
+<p> 
+Для того, чтобы лучше увидеть всю
+картину квантовых вращений можно вращать 3D-модель сферы Блоха нажав правую клавишу мыши. Вращение колесика мыши позволяет
+увеличивать и уменьшать размер 3D-модели сферы, а нажав левую клавишу мыши можно перемещать 3D-модель по экрану.
+На не очень быстрых компьютерах лучше не нажимать кнопки вызывающие вращения слишком часто, так как программа 
+может начать притормаживать.
+</p>
+<p>
+Перейдем к рассмотрению матриц Паули как квантовых вентилей. Также рассмотрим вентиль Адамара <b>H</b>. 
+<br><br>
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img src = "foto.png">
+<br>
+</p>
+<p>
+Вентиль <b>X</b> осуществляет поворот вектора Блоха на 180°
+вокруг оси X, вентиль <b>Y</b> поворот на 180° вокруг оси Y, а вентиль <b>Z</b> поворот на 180° вокруг оси Z. В 
+соответствии с поворотами вектора Блоха изменяются квантовые состояния |ψ〉. Для визуализации поворотов используются
+кнопки "<b>X</b>", "<b>Y</b>" и "<b>Z</b>".
+<br>
+<!-- &emsp;&emsp;&emsp;&emsp;<img src = "x_y_z.png"> -->
+</p>
+<p>
+&emsp;&emsp;&emsp;&emsp;<img src = "PauliX.png">
+</p>
+
+<p>
+&emsp;&emsp;&emsp;&emsp;<img src = "PauliYZ.png">
+</p>
+
+<p>
+По <b><a href="https://www.youtube.com/watch?v=r0nDhrAwskU&list=PLx5rbdJH2sWYSohLmK3aAYMr9T7uNyOqv" target="_blank">ссылке</a></b>
+можно найти хорошие видеолекции по матрицам Паули, спину и сфере Блоха. Английский язык в них не очень сложен и также можно
+включить субтитры с переводом на русский. Лектор подробно приводит все выкладки на доске.
+</p>
+&emsp;&emsp;&emsp;&emsp;<img src = "Hadamard.png">
+</p>
+
+<h3 align = "center">&emsp;&emsp;
+<a href="../Chapter5/Chapter5.html"> <span class=brown>Глава 5 </span></a>  <span class=brown>&ensp;◄</span>
+&emsp;&emsp;&emsp;
+<a href="../index.html"> <span class=brown> Содержание  </span></a>
+</h3>
+
+</body>
+</html>

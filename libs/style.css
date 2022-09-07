@@ -1,0 +1,136 @@
+
+        body {
+            margin: 20px;
+        }
+		
+		h2, h3
+		{
+			color: darkblue; 
+		}
+  
+		p {
+			text-indent: 20px; /* Отступ первой строки в пикселах */
+		}
+
+		code 
+		{
+			font-size: 11pt;
+			/*color: DarkRed; */
+			color: DarkMagenta;
+			/*color: Purple;*/
+			/*color: Navy; */
+			/*font-weight: bold;*/
+		}
+		
+		.text3 {
+			font-size: 10pt;
+		}
+		
+		.text4 {
+			font-size: 11pt;
+		}
+		
+		.colortext {
+			color: blue; /* цвет выделения */
+		}	
+		
+		.brown { 
+			color: brown;
+		}
+		
+		.sien { 
+			color: Sienna;
+		}
+		
+		.red  {
+			color: red; /* цвет выделения */
+		}		
+		.blue {
+			color: blue; /* цвет выделения */
+			font-style: italic; 
+		}		
+		
+		.blue2 {
+			color: blue; /* цвет выделения */
+			//font-style: italic; 
+			font-weight: bold;
+		}
+		
+		.blue3 {
+			color: blue; /* цвет выделения */
+		}
+		
+		.purple  {
+			color: purple ;
+		}		
+		
+		.green  {
+			color: green ;
+		}
+		
+		.par {
+			font-family: monospace;
+			color: DarkOrchid;
+			font-size: 12pt;
+		}
+		
+		.jp {
+			color: BlueViolet
+			/*font-weight: bold;*/
+		}		
+		
+		.center-img {
+			display: block;
+			margin: 0 auto;
+		}	
+		
+		.left-img-rounded {
+			float:left;
+			display: block;
+			margin: 0 auto;
+			border-radius: 3px;
+		}
+		
+		.center-img-rounded {
+			display: block;
+			margin: 0 auto;
+			border-radius: 10px;
+		}
+
+		.left-img1 {		
+			float:left;
+			margin: 4px 10px 2px 0px;
+			border:1px solid #CCC;
+			padding:6px;
+		}
+	
+		.left-img {
+			float:left; /* Выравнивание по левому краю */
+			margin: 7px 7px 7px 7px; /* Отступы вокруг картинки */
+			border: 1px solid #CCC;
+			width:120px; /* you can use % */
+			height: auto;
+		}
+
+		.left-img2 {
+			float:left; /* Выравнивание по левому краю */
+			margin: 7px 7px 7px 7px; /* Отступы вокруг картинки */
+			border: 1px solid #CCC;
+			width:280px; /* you can use % */
+			height: auto;
+		}		
+	
+		.rounded-corners{
+			border-radius: 10px;
+		}
+
+		ol{
+			color: navy; /* Цвет текста */
+			background: #fff; /* Цвет фона */
+			padding: 0px; /* Поля вокруг текста */
+			margin-left: 20px; /* Отступ слева */
+		}
+			
+		.operative { font-weight: bold; border: 1px solid yellow;}
+		#quine { border: 4px solid #88c; }
+	

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Chapter 4</title>
+	<link rel="stylesheet" type="text/css" href="../libs/style.css">
+	<script type="text/javascript" src="../libs/three.js"></script>
+	<script type = "text/javascript" src = "../libs/dat.gui.js"></script>
+	<script src = "../libs/OrbitControls.js"></script>
+	<script src = "../libs/WebGeometry.js"></script>
+	<script src = "buttons.js"></script>
+	<script src = "chapter4.js"></script>
+	<script src = "text.js"></script>
+	
+	
+	<style>
+		#div_out
+		{
+			position: relative;
+			width: 1075px;
+			height: 425px;
+			left: 0px;
+			background-color: #ffffff;
+			border: solid 2px;
+		}
+		#div_in
+		{
+			position: absolute;
+			left: 5px;
+			top: 5px;			
+			height: 610px;
+			width: 995px;
+			background-color: #eeffee;
+			border: solid 2px;
+		}
+		#div_pars
+		{
+			position: absolute;
+			left: 505px;
+			top: 2px;			
+			height: 415px;
+			width: 300px;
+			background-color: #eeeeaa;
+			border: solid 2px;
+		}
+		#gui_container
+		{
+			position: absolute;
+			left: 815px;
+			top: 5px;
+		}
+	</style>
+			
+	<style>
+		button
+		{
+		  border-radius: 14px;
+		  border: none;
+		  padding: 10px;
+		  color: #111;
+		  border-radius: 14px;
+		  font: italic bold 24px Georgia,serif;
+		  transition: all 0.2s;
+		  margin: 5px;
+		  border-bottom: 0px solid #eee;
+		  cursor:pointer;
+						position: absolute;
+						left: 8px;
+						top: 10px;	
+		}
+		button:active
+		{
+		  transform: scaleX(0.9) translateY(4px);
+		}
+
+		button.yellow{
+		  background: #88aa00;
+		}
+		button.yellow:not(:active){
+		  border-bottom: 4px solid #333300;
+		}
+	</style>
+
+</head>
+
+<body>
+
+<h3 align = "center">&emsp;&emsp;
+<a href="../Chapter3/Chapter3.html"> <span class=brown>Глава 3 </span></a>  <span class=brown>&ensp;◄</span>
+&emsp;&emsp;&emsp;
+<a href="../index.html"> <span class=brown> Содержание  </span></a>
+&emsp;&emsp;&emsp;
+ <span class=brown>► &ensp;</span><a href="../Chapter5/Chapter5.html"> <span class=brown> Глава 5  </span></a>
+</h3>
+
+<h2 align = "center">Глава 4.&emsp;&emsp; Визуализация квантового спина</h2>
+<h3 align = "center">Chapter 4. &emsp;&emsp;&emsp;&emsp; Visualization of quantum spin</h3>
+
+<p>
+<div id="div_out">  
+
+	
+		<canvas id = "canvas_draw" width="500" height="422" style = "border: 1px solid; position: absolute; z-index: 1"></canvas>
+		<canvas id = "hud_1" width="500" height="422" style = "position: absolute; z-index: 0"></canvas>
+		
+		<div id="div_pars" >
+			<canvas id="hud_2" width="330" height="390"></canvas>
+		</div>
+
+		<div id="gui_container" ></div> 
+	
+	
+</div>
+</p>
+
+<p>
+<span class=blue3>
+&ensp; To determine the value of the quantum state <b>|ψ〉</b>, set the values of the polar and azimuth angles
+either using the <b>GUI</b> in the upper right corner of the program, or using the keys located 
+under the <b>GUI</b>. 
+<br> <br>
+<b>Blue arrow</b> - the direction of spin in physical space
+<br>
+<span class=green><b>Green arrow</b></span> - the direction of spin in spinor space
+<br><br>
+&ensp; In the above visualization,  you can set the direction of the electron spin in three-dimensional physical space using two angles.  
+The first angle, which is given the name of the polar angle <em>θ</em>, sets the (geographical) latitude.  
+The second sets the azimuth angle <em>φ</em>.  Since the value of the polar angle in the spinor space is half 
+of the corresponding angle in the physical space,  the corresponding spinor angle <em>θ/2</em> is simultaneously set.  
+Azimuthal angles in both spaces  have the same values.  
+<br><br>
+&ensp; The <b>blue arrow</b> determines the direction 
+of the electron's spin in physical space.  The <span class=green><b>green arrow</b></span> determines the direction of the spinor.
+The values of the polar and azimuth angles are set in the right part of the window either using the <b>GUI</b> or using the buttons. 
+In response to this action,  the value of the state function and two probabilities corresponding to the spin values <b>+1</b> and <b>-1</b> are given.
+<br><br>
+In the program, you can see the value of the state vector  <b>|ψ〉</b> 
+for any predetermined angle of the electron in the spinor and physical space.  
+In physical space, the angle θ has a range of variation from <em>0°</em> to <em>720°</em>, and in spinor from <em>0°</em> to <em>360°</em>.  
+Therefore,  on the sphere,  <b>two</b> revolution of  <em>θ</em>  physical space correspond  to <b>one</b> revolution of <em>θ</em>  spinor space.  
+The azimuthal angle φ in both spaces has the same range of variation from <em>0°</em> to <em>360°</em>. 
+Thus, each point on the surface of the sphere defines a unit vector in the spinor space.  
+The starting points of these vectors are located in the center of the sphere.
+<br> <br>
+The directions along the Z axis are denoted as Up (u) and Down (d).<br>
+The directions along the X axis are denoted as Right (r) and Left (l).<br>
+The directions along the Y axis are denoted as Forward (f) and Back (b).
+</p>
+</span>
+
+<span class=purple>
+&emsp;Sphere rotation - left mouse button drag<br>
+&emsp;Sphere size - middle mouse button drag, or mousewheel<br>
+&emsp;Sphere movement on screen - right mouse button drag
+</span>
+</p>
+<p>
+
+</body>
+</html>
+<p>
+В приведенной визуализации можно задать направление спина электрона в трехмерном физическом
+пространстве при помощи двух углов. Первый угол, которому дано название полярного угла θ, задает
+(географическую) широту. Второй задает азимутальный угол φ. Так как в спинорном пространстве
+значение полярного угла составляет половину от соответствующего угла в физическом пространстве, то
+одновременно задается соответствующий угол спинора θ/2. Азимутальные углы в обеих пространствах 
+имеют одинаковые значения. Синяя стрелка определяет направление спина электрона в 
+физическом пространстве. Зеленая стрелка определяет направление спинора.
+<br>
+&ensp;&ensp;Значения полярного и азимутального углов устанавливается в правой части окна либо при помощи GUI, 
+либо при помощи кнопок. В ответ на это действие выдается значение функции состояния и две
+вероятности соотвествущие значениям спина +1 и -1.
+</p>
+
+<p>
+В программе можно увидеть значение вектора состояния |ψ〉 для любого наперед заданного угла
+электрона в спинорном и физическом пространстве. В физическом пространстве угол θ имеет диапазон
+изменения от 0° до 720°, а в спинорном от 0° до 360°. Поэтому на сфере два оборота 
+θ<sub>физическое пространство</sub> соответствуют одному обороту θ<sub>спинорное пространство</sub>.
+Азимутальный угол φ в обоих пространствах имеет одинаковый диапазон изменения от от 0° до 360°.
+Таким образом каждая точка на поверхности сферы задает единичный вектор в спинорном пространстве.
+Начальные точки этих векторов расположены в центре сферы. 
+</p>
+
+<p>
+Для того, чтобы лучше понять сделанную мной программу визуализации квантового спина рекомендую
+посмотреть видео на youtube <a href = "https://www.youtube.com/watch?v=3k5IWlVdMbo" target="_blank">
+Квантовый спин - Визуализация физики и математики</a> на английском языке.
+То же видео на русском языке, но более короткое <a href = "https://www.youtube.com/watch?v=r-gw-K8XgcI" target="_blank">
+Визуализация квантового спина</a>. В моей программе визуализации можно задавая значения параметров наблюдать
+примерно то же самое, что и в указанных видео.
+</p>
+
+<p>
+Так как каждая точка на поверхности сферы задает единичный вектор в спинорном пространстве,
+то найдем координаты этих векторов на сфере. Для этого рассмотрим еще раз процесс измерения.
+В квантовой механике те величины, которые может зарегистрировать исследователь, приборами или
+визуально, носят название <em>наблюдаемых</em> величин или просто <em>наблюдаемых</em>.
+В процессе измерения спина электрона прибором Штерна-Герлаха получается только одно из значений
+наблюдаемой величины - либо +1 либо -1. Других значений, измеряемых прибором, быть не может.
+В эксперименте нас интересуют вероятности получения +1 и -1 относительно приготовленного 
+состояния. Состояние, в котором происходит приготовление спина, задается вектором исходящим из
+центра сферы и заканчивающимся на поверхности сферы. Состояние, в котором происходит измерение спина, 
+также задается вектором исходящим из центра сферы и заканчивающимся на ее поверхности.
+Поэтому задача состоит в вычислении концов векторов лежащих на сфере - в спинорном пространстве.
+В квантовой механике спина это происходит следующим образом.
+</p>
+
+<p>
+Вводится понятие оператора. Будем считать, что оператор это квадратная матрица 2x2.
+В качестве постулата принимается тот факт, что наблюдаемым величинам (в данном случае +1 и -1)
+соответствуют эрмитовы операторы. Как определяются эрмитовы операторы можно прочитать во
+множестве книг и статей и поэтому не будем на этом останавливаться.
+Для каждого направления на сфере существует свой оператор. Для этого оператора можно
+найти специальный вектор - собственный вектор. 
+</p>
+<p>
+Одними из основных операторов в квантовой механике являются так называемые матрицы <em>Паули</em>.
+Рассмотрим их вкратце. К ним мы еще вернемся в шестой главе когда будут рассматриваться квантовые вращения.
+</p>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<img src = "page_1.png"><br>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<img src = "page_2.png"><br>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<img src = "page_3.png"><br>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<img src = "page_4.png"><br>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<img src = "page_5.png"><br>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<img src = "page_6.png"><br>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<img src = "page_7.png"><br>
+<!-- &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<img src = "Text33text0.jpg" class="left-img-rounded" border = "1px" > -->
+<p>
+В самом первом разделе, где рассматривался эксперимент Штерна-Герлаха рассматривалось вычисление средних
+значений. Сейчас самое время к нему вернуться еще раз и повторим сказанное там. Допустим, что мы имеем идеальную монету у которой
+вероятность выпадения <b>+1</b> равно 0.5 или 50%, а вероятность выпадения <b>-1</b> также равно 0.5 или 50%.
+Тогда среднее значение выпавшей величины можно найти по следующей формуле:<br>
+&ensp;&ensp;&ensp;<b>(+1)×(<em>вероятность выпадения +1</em>) + (-1)×(<em>вероятность выпадения -1</em>) = (+1) × 0.5 + (-1) × 0.5 = 0</b><br>
+Иными словами среднее значение равно 0. Что и следовало ожидать от идеальной монеты.<br>
+Если имеем монету со смещенным центром тяжести с вероятностями +0.3 и -0.7 соответственно то получим   <br>
+&ensp;&ensp;&ensp;<b>(+1)×(<em>вероятность выпадения +1</em>) + (-1)×(<em>вероятность выпадения -1</em>) = (+1) × 0.3 + (-1) × 0.7 = -0.4</b><br>
+Среднее значение выпавшей величины равно -0.4, что говорит о более частом выпадении решки.
+</p>
+
+<p>
+Используя тригонометрическую формулу<br>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<b><span class=blue>cos(α) = cos<sup>2</sup>(α/2) - sin<sup>2</sup>(α/2)</span></b> &ensp;&ensp;<br>
+мы можем записать выражение <b>〈σ〉 = cos(α)</b> в следующем виде:<br>
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <b>〈σ〉 = (+1)·cos<sup>2</sup>(α/2) + (-1)·sin<sup>2</sup>(α/2)</b>&ensp;&ensp; <br>
+&ensp;&ensp;&ensp; <em>А мы только что получили выражение</em> 
+  <br>
+  &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+  <!-- <span class=blue2>P = cos<sup>2</sup>(α/2)</span> <br> -->
+   <b>P = cos<sup>2</sup>(α/2)</b> <br>
+
+Таким образом вероятность того, что в результате измерения будет получена <b>+1</b> равна <b>cos<sup>2</sup>(α/2)</b>,
+вероятность получения <b>-1</b> будет равной <b>sin<sup>2</sup>(α/2)</b>.
+Из приведенной формулы видно, что среднее значение величины спина оказалось выраженным через квадраты 
+синуса и косинуса <b><em>половинного</em></b> угла <b>α/2</b>.
+</p>
+<p>
+<b>Замечание:</b> В самом первом разделе угол на который поворачивался прибор Штерна-Герлаха 
+был обозначен как θ. В данном разделе этот угол обозначен символом α, так как углы θ<sub>1</sub> и
+θ<sub>2</sub> использовались при задании направления векторов <b>m</b> и <b>n</b>.
+</p>
+
+<h3 align = "center">&emsp;&emsp;
+<a href="../Chapter3/Chapter3.html"> <span class=brown>Глава 3 </span></a>  <span class=brown>&ensp;◄</span>
+&emsp;&emsp;&emsp;
+<a href="../index.html"> <span class=brown> Содержание  </span></a>
+&emsp;&emsp;&emsp;
+ <span class=brown>► &ensp;</span></a><a href="../Chapter5/Chapter5.html"> <span class=brown> Глава 5  </span></a>
+</h3>
+
+</body>
+</html>
